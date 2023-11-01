@@ -1,33 +1,38 @@
-use std::io::{stdin, BufRead, BufReader, BufWriter, Write};
-
-fn main() {
-    let stdin = stdin();
-    let mut reader = BufReader::new(stdin.lock());
-
-    let mut buffer = String::new();
-    reader.read_line(&mut buffer).unwrap();
-    let n = buffer.trim().parse::<usize>().unwrap();
-    //세번째는 각  항목이 입력받은 순서
-    let mut pairs: Vec<(i32, String, usize)> = Vec::new();
-    for (i, line) in reader.lines().take(n).enumerate() {
-        let buffer = line.unwrap();
-        let mut nums = buffer.trim().split_whitespace();
-        let a = nums.next().unwrap().parse::<i32>().unwrap();
-        let b = nums.next().unwrap().to_string();
-        pairs.push((a, b, i));
+use std::io::{BufReader,BufRead,BufWriter,Write,stdin,stdout};
+fn main(){
+    let mut reader= BufReader::new(stdin().lock());
+    let mut writer=BufWriter::new(stdout().lock());
+    let mut input = String::new();
+    reader.read_line(&mut input).unwrap();
+    //온라인 저지 회원의 수  
+    let n:i32= input.trim().parse().unwrap();
+    let mut users: Vec<(i32,String,i32)>= Vec::new();
+    for i in 0..n{
+        input.clear();
+        reader.read_line(&mut input).unwrap();
+        let mut v= input.trim().split_whitespace();
+        //나이는 1도다 크거나 같으며 200보다 작거나 같은 숫자
+        let age:i32= v.next().unwrap().parse().unwrap();
+        //이름은 대소문자
+        let name= v.next().unwrap().trim().to_string();
+        users.push((age,name,i));
     }
 
-    pairs.sort_by(|a, b| {
-        if a.0 == b.0 {
-            a.2.cmp(&b.2)
-        } else {
-            a.0.cmp(&b.0)
-        }
+
+    users.sort_by(|a,b|{
+    //a와 b의 나이를 비교
+    //같으면 인덱스를 비교하여 정렬
+  if a.0==b.0{
+    a.2.cmp(&b.2)
+  }else{
+    //나이가 다르면 나이로 비교하여 정렬
+    a.0.cmp(&b.0)
+  }
     });
 
-    let stdout = std::io::stdout();
-    let mut writer = BufWriter::new(stdout.lock());
-    for (a, b, _) in pairs {
-        write!(writer, "{} {}\n", a, b).unwrap();
+    for (a, b, _) in users {
+        writeln!(writer, "{} {}", a, b).unwrap();
     }
+
+    writer.flush().unwrap();
 }
