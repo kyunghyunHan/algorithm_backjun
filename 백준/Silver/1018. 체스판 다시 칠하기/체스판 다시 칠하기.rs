@@ -1,25 +1,3 @@
-const WB: [&str; 8] = [
-    "WBWBWBWB",
-    "BWBWBWBW",
-    "WBWBWBWB",
-    "BWBWBWBW",
-    "WBWBWBWB",
-    "BWBWBWBW",
-    "WBWBWBWB",
-    "BWBWBWBW"
-];
-
-const BW: [&str; 8] = [
-    "BWBWBWBW",
-    "WBWBWBWB",
-    "BWBWBWBW",
-    "WBWBWBWB",
-    "BWBWBWBW",
-    "WBWBWBWB",
-    "BWBWBWBW",
-    "WBWBWBWB"
-];
-
 use core::num;
 use std::io::{BufReader,BufRead,BufWriter,Write,stdin,stdout};
 
@@ -74,4 +52,3 @@ fn main(){
     
   writeln!(writer,"{:?}",result.iter().min().unwrap()).unwrap();
 }
-
