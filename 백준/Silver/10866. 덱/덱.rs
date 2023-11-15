@@ -1,17 +1,25 @@
 use std::collections::VecDeque;
-use std::io;
+use std::io::{BufReader,BufRead,BufWriter,Write,stdin,stdout};
 
-fn main() {
+fn main(){
+    let mut reader= BufReader::new(stdin().lock());
+    let mut writer= BufWriter::new(stdout().lock());
+    /*
+     양방향 큐 deque
+     양방향에서 element를 추거하거나 제거할수있음
+     push와 pop이 압도적으로빠름
+     */
+    let mut input = String::new();
     let mut dq: VecDeque<i32> = VecDeque::new();
 
-    let mut input = String::new();
-    io::stdin().read_line(&mut input).expect("Failed to read input");
-    let n: i32 = input.trim().parse().expect("Invalid input");
+    reader.read_line(&mut input).unwrap();
 
-    for _ in 0..n {
-        let mut command = String::new();
-        io::stdin().read_line(&mut command).expect("Failed to read command");
-        let parts: Vec<&str> = command.split_whitespace().collect();
+    let n= input.trim().parse().unwrap();
+
+    for _ in 0..n{
+        input.clear();
+        reader.read_line(&mut input).unwrap();
+        let parts: Vec<&str> = input.split_whitespace().collect();
 
         match parts[0] {
             "push_front" => {
@@ -24,41 +32,42 @@ fn main() {
             }
             "pop_front" => {
                 if let Some(x) = dq.pop_front() {
-                    println!("{}", x);
+                    writeln!(writer,"{}", x).unwrap();
                 } else {
-                    println!("-1");
+                    writeln!(writer,"{}", -1).unwrap();
                 }
             }
             "pop_back" => {
                 if let Some(x) = dq.pop_back() {
-                    println!("{}", x);
+                    writeln!(writer,"{}", x).unwrap();
                 } else {
-                    println!("-1");
+                    writeln!(writer,"{}", -1).unwrap();
                 }
             }
             "size" => {
-                println!("{}", dq.len());
+                writeln!(writer,"{}", dq.len()).unwrap();
             }
             "empty" => {
-                println!("{}", dq.is_empty() as i32);
+                writeln!(writer,"{}", dq.is_empty() as i32).unwrap();
             }
             "front" => {
                 if let Some(&x) = dq.front() {
-                    println!("{}", x);
+                    writeln!(writer,"{}", x).unwrap();
                 } else {
-                    println!("-1");
+                    writeln!(writer,"{}", -1).unwrap();
                 }
             }
             "back" => {
                 if let Some(&x) = dq.back() {
-                    println!("{}", x);
+                    writeln!(writer,"{}", x).unwrap();
                 } else {
-                    println!("-1");
+                    writeln!(writer,"{}", -1).unwrap();
                 }
             }
             _ => {
-                println!("Invalid command");
+                writeln!(writer,"{}", "Invalid command").unwrap();
             }
         }
     }
+    writer.flush().unwrap();
 }
