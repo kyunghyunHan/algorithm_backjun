@@ -32,8 +32,9 @@ for _ in range(0,n):
             stack.pop()
             answer.append("-")
 
-if len(stack)!=1:
-    print("NO")
+if len(stack) != 1:
+    sys.stdout.write("NO\n")
 else:
-    for  i in answer:
-        print(i)
+    for i in answer:
+        sys.stdout.write(f"{i}\n")
+    sys.stdout.flush()
