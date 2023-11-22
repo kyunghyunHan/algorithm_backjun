@@ -7,6 +7,8 @@ fn main(){
   reader.read_line(&mut input).unwrap();
   let mut inputs= input.trim().split_whitespace().map(|x|x.parse::<u32>().unwrap());
   //세로
+  
+
   let n: u32= inputs.next().unwrap();
   //가로
   let m: u32= inputs.next().unwrap();
@@ -15,7 +17,7 @@ fn main(){
   //블록을 제거하면 2초
   //인벤토리에서 좌표를 꺼내어 블록위에 넣으면 1초
   let mut matrix:Vec<Vec<u32>>= vec![];
-  let mut t=500*500*2*257;
+  let mut t=u32::MAX;
   let mut idx= 0;
   for i in 0..n{
      input.clear();
@@ -23,14 +25,16 @@ fn main(){
      let  blocks:Vec<u32>= input.trim().split_whitespace().map(|x|x.parse().unwrap()).collect();    
      matrix.push(blocks)
   }
-
+  //높이가 0부터 256까지
   for target in 0..257{
     let mut max_target= 0;
     let mut min_target=0;
 
     for i in 0..n{
       for j in 0..m{
+        //주어진 행렬i,j의 크기가 현재높이보다 크면
         if matrix[i as usize][j as usize]>=target{
+          //max크기는
           max_target+=matrix[i as usize][j as usize]-target
         }else{
           min_target += target - matrix[i as usize][j as usize]
