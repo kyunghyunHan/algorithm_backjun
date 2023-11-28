@@ -4,17 +4,17 @@ fn main(){
     let mut writer= BufWriter::new(stdout().lock());
     let mut input = String::new();
     reader.read_line(&mut input).unwrap();
-  let T: i32 = input.trim().parse().unwrap();
+  let t: i32 = input.trim().parse().unwrap();
 
-    for _ in 0..T {
+    for _ in 0..t {
         input.clear();
         reader.read_line(&mut input).unwrap();
-        let N: i32 = input.trim().parse().unwrap();
+        let n: i32 = input.trim().parse().unwrap();
         
         let mut zero = 1;
         let mut one = 0;
 
-        for _ in 0..N {
+        for _ in 0..n {
             let temp = zero;
             zero = one;
             one = zero + temp;
@@ -22,4 +22,5 @@ fn main(){
 
         writeln!(writer,"{} {}", zero, one).unwrap();
     }
+    writer.flush().unwrap();
 }
