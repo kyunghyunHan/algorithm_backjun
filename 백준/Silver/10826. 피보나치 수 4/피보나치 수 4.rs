@@ -1,18 +1,5 @@
 use std::{cmp, io};
-
-fn input_integers() -> Vec<i64> {
-    let mut s = String::new();
-
-    io::stdin().read_line(&mut s).unwrap();
-
-    let values: Vec<i64> = s
-        .as_mut_str()
-        .split_whitespace()
-        .map(|s| s.parse().unwrap())
-        .collect();
-
-    values
-}
+use std::io ::{BufReader,BufWriter,BufRead,Write,stdin,stdout};
 
 fn add_fibonacci(a: &String, b: &String) -> String {
     let mut result = String::from("0");
@@ -50,13 +37,18 @@ fn add_fibonacci(a: &String, b: &String) -> String {
 }
 
 fn main() {
-    let n = input_integers()[0] as usize;
+    let mut reader= BufReader::new(stdin().lock());
+    let mut writer= BufWriter::new(stdout().lock());
+    let mut input = String::new();
+    reader.read_line(&mut input).unwrap();
+    
+    let n:usize = input.trim().parse().unwrap();
 
     if n == 0 {
-        println!("0");
+        writeln!(writer,"0").unwrap();
         return;
     } else if n == 1 || n == 2 {
-        println!("1");
+        writeln!(writer,"1").unwrap();
         return;
     }
 
@@ -70,5 +62,5 @@ fn main() {
         b = ans.clone();
     }
 
-    println!("{}", ans);
+    writeln!(writer,"{ans}").unwrap();
 }
