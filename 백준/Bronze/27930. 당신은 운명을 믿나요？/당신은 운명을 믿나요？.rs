@@ -1,34 +1,36 @@
-use std::io::{stdin, stdout, BufRead, BufReader, BufWriter, Write};
+use std::io::{stdin, stdout, BufRead, BufWriter, Write};
 
 fn main() {
-    let mut reader = BufReader::new(stdin().lock());
-    let mut writer = BufWriter::new(stdout().lock());
-    let mut input = reader.lines();
+    let mut reader = stdin().lock();
+    let mut writer = BufWriter::new(stdout());
 
-    if let Some(Ok(line)) = input.next() {
-        let mut korea = ['K', 'O', 'R', 'E', 'A'];
-        let mut YONSEI = ['Y', 'O', 'N', 'S', 'E', 'I'];
-        let s = line.trim().chars().collect::<Vec<char>>();
+    let mut input = String::new();
+    reader.read_line(&mut input).unwrap();
+    
+    let s = input.trim().chars().collect::<Vec<char>>();
 
-        let mut yi = 0;
-        let mut ki = 0;
-        let mut i = 0;
-        loop {
-            if ki == 4 {
-                writeln!(writer, "KOREA").unwrap();
-                break;
-            }
-            if yi == 5 {
-                writeln!(writer, "YONSEI").unwrap();
-                break;
-            }
-            if s[i] == korea[ki] {
-                ki += 1;
-            }
-            if s[i] == YONSEI[yi] {
-                yi += 1;
-            }
-            i += 1;
+    let korea = ['K', 'O', 'R', 'E', 'A'];
+    let yonsei = ['Y', 'O', 'N', 'S', 'E', 'I'];
+
+    let mut ki = 0; // KOREA의 문자 인덱스
+    let mut yi = 0; // YONSEI의 문자 인덱스
+
+    for c in s {
+        if ki < 5 && c == korea[ki] {
+            ki += 1; // KOREA 문자를 찾으면 인덱스 증가
+        }
+        if yi < 6 && c == yonsei[yi] {
+            yi += 1; // YONSEI 문자를 찾으면 인덱스 증가
+        }
+
+        // 하나의 학교를 찾으면 바로 출력하고 종료
+        if ki == 5 {
+            writeln!(writer, "KOREA").unwrap();
+            return;
+        }
+        if yi == 6 {
+            writeln!(writer, "YONSEI").unwrap();
+            return;
         }
     }
 }
